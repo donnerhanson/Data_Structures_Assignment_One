@@ -1,0 +1,13 @@
+Data Structures and Algorithms
+
+References:
+CPP Reference
+CPlusPlus.com
+Geeks for Geeks
+Stack Overflow
+
+set back to beginning after reading through file
+https://stackoverflow.com/questions/5343173/returning-to-beginning-of-file-after-getline
+
+https://m.wikihow.com/Calculate-Variance#Calculating-Variance-of-a-Population_sub
+https://study.com/academy/lesson/calculating-probability-relative-frequencies.html
