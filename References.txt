@@ -6,12 +6,22 @@ CPlusPlus.com
 Geeks for Geeks
 Stack Overflow
 
+C/C++ Lecture Notes I - Raymond Mitchell - UCSD Extension
+C/C++ Lecture Notes II - Raymond Mitchell - UCSD Extension
+C/C++ Lecture Notes III - Raymond Mitchell III - UCSD Extension
+C/C++ Lecture Notes IV - Raymond Mitchell III - UCSD Extension
+
 set back to beginning after reading through file
 https://stackoverflow.com/questions/5343173/returning-to-beginning-of-file-after-getline
+
+check for empty file before processing
+https://stackoverflow.com/questions/2390912/checking-for-an-empty-file-in-c
 
 https://m.wikihow.com/Calculate-Variance#Calculating-Variance-of-a-Population_sub
 https://study.com/academy/lesson/calculating-probability-relative-frequencies.html
 
+substring
+http://www.cplusplus.com/reference/string/string/substr/
 
 Genome.txt
 Mean of all nucleotide string lengths 10.8333

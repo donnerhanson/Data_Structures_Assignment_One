@@ -1,1 +1,26 @@
-Success!
+Name: Donner Hanson  ID: 1276484
+Sum of lengths: 38
+Mean of lengths: 2.375
+Variance of lengths: 0
+Standard of deviation: 1.45237
+Nucleotide  Probability
+A: 11    0.289474
+C: 9    0.236842
+T: 9    0.236842
+G: 9    0.236842
+AA: 1    0.0322581
+AC: 2    0.0645161
+AT: 2    0.0645161
+AG: 2    0.0645161
+CA: 1    0.0322581
+CC: 1    0.0322581
+CT: 1    0.0322581
+CG: 1    0.0322581
+TA: 2    0.0645161
+TC: 2    0.0645161
+TT: 2    0.0645161
+TG: 2    0.0645161
+GA: 3    0.0967742
+GC: 3    0.0967742
+GT: 3    0.0967742
+GG: 3    0.0967742
