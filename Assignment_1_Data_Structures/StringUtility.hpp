@@ -16,12 +16,13 @@ using namespace std;
 
 const string ASK_CONTINUE = "Would you like to continue?...(Y/N)\n";
 
-class Utility
+class StringUtility
 {
 public:
-    Utility(){};
+    StringUtility(){};
     string Capitalize(string &str);
     bool CheckForYesNo();
+    string RemoveErroneousChars(string& str);
 private:
 };
 

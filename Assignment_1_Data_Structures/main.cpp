@@ -19,7 +19,8 @@
 #include <ostream>
 #include <string>
 
-#include "Utility.hpp"
+#include "Calculator.hpp"
+#include "StringUtility.hpp"
 
 
 using namespace std;
@@ -31,22 +32,6 @@ const string NUM_CMD_ARGS_FAIL = "Not enough command line arguements...\n";
 
 
 
-//Pass string by reference (no copy constructed) and removes unwanted chars
-string RemoveErroneousChars(string& str)
-{
-    string temp;
-    
-    for (int i(0); i < str.length(); ++i)
-    {
-        // if a correct letter add to temp string
-        if(str.at(i) == 'A' || str.at(i) == 'C' ||
-           str.at(i) == 'T' || str.at(i) == 'G')
-            temp+=str.at(i);
-    }
-    // the referenced str now is updated program wide
-    str = temp;
-    return str;
-}
 
 
 /* relative probability is the amount of times x was found after
@@ -57,7 +42,7 @@ string RemoveErroneousChars(string& str)
 
 int main(int argc, const char * argv[])
 {
-    Utility a;
+    StringUtility a;
     bool persist = true;
     string filename = argv[1];
     while(persist)
@@ -65,62 +50,41 @@ int main(int argc, const char * argv[])
         
         if (argc == 2)
         {
-            
-            double numLines = 0;
-            double sumLineLengths = 0;
-            double mean = 0;
             ifstream inFile(filename, ios::in);
             string line;
             if(inFile.is_open())
             {
+                Calculator* calc  = new Calculator();
                 // two parts
                 // PT 1: get sum of lengths, num of lines, and mean
                 while (getline(inFile, line))
                 {
                     // Assert that all values will be capitalized
                     a.Capitalize(line);
-                    cout << line << "\n";
-                    RemoveErroneousChars(line);
+                    a.RemoveErroneousChars(line);
                     // if the line is not whitespace add to results
                     if (line.length() != 0)
                     {
-                        cout << line << "\n";
-                        numLines++;
-                        sumLineLengths += line.length();
-                        cout << "length = " << line.length() << "\n";
-                        cout << "Total length of all strings = " << sumLineLengths << "\n";
+                        calc->addLine(line);
                     }
                 }
                 //PT 2 Reset and calculate Variance
-                mean = sumLineLengths/numLines;
-                cout << "Mean of all nucleotide string lengths " << mean << "\n";
+                calc->setMean();
+                cout << "Mean of all nucleotide string lengths in calc: " << calc->getMean() << "\n";
                 inFile.clear();
                 inFile.seekg(0, ios::beg);
-                double varianceNumeratorTotal = 0;
-                double varianceLineLength = 0;
-                double varianceToSquare;
-                double varianceResult;
                 while (getline(inFile, line))
                 {
-                    varianceToSquare = 0;
                     a.Capitalize(line);
-                    RemoveErroneousChars(line);
-                    // subtract the mean from data point
-                    // i.e. length - mean
-                    varianceLineLength = line.length();
-                    varianceToSquare = varianceLineLength - mean;
-                    // square the answer
-                    varianceToSquare *= varianceToSquare;
-                    varianceNumeratorTotal += varianceToSquare;
-                    // then add each to variable
+                    a.RemoveErroneousChars(line);
+                    calc->CalculateVarianceNumerator(line);
                     
                 }
-                // divide by all by mean
-                varianceResult = varianceNumeratorTotal/numLines;
-                // result is the variance
-                cout << "Variance Result = " << varianceResult << "\n";
+                calc->CalculateVarianceResult();
+                cout << "CLASS: Variance Result = " << calc->getVarianceResult() << "\n";
                 
                 inFile.close();
+                delete calc;
             }
             else
             {
@@ -148,12 +112,10 @@ int main(int argc, const char * argv[])
             cout << "Continuing\n\n";
             cout << ASK_NEW_FILE;
             getline(cin, newFilename);
-            //cout << "input file name " << newFilename << "\n";
         }
         filename = newFilename;
-        //cout << "input file name " << filename << "\n";
     }
-
+    
     cout << "Program terminated....\n\n";
     return 0;
 }

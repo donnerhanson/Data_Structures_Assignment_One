@@ -18,19 +18,34 @@
 #include <ostream>
 #include <string>
 
-#include "Utility.hpp"
+#include "StringUtility.hpp"
 
 class Calculator
 {
 public:
-    Calculator(ifstream &inFile)
-    {
-        ;
-    }
+    Calculator() : numLines(0), sumLineLengths(0), mean(0), variance(0), varianceNumeratorTotal(0) {};
+    double getNumLines();
+    double getSumLineLengths();
+    double getMean();
+    double getVarianceResult();
+    
+    void setMean();
+    
+    void CalculateVarianceNumerator(const string &str);
+    void CalculateVarianceResult();
+    void addLine(const string &str);
+    
 private:
     double numLines;
     double sumLineLengths;
     double mean;
+    double variance;
+    double varianceNumeratorTotal;
+    double varianceLineLength;
+    double varianceResult;
+    
+
+    
 };
 
 #endif /* Calculator_hpp */

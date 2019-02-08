@@ -11,3 +11,12 @@ https://stackoverflow.com/questions/5343173/returning-to-beginning-of-file-after
 
 https://m.wikihow.com/Calculate-Variance#Calculating-Variance-of-a-Population_sub
 https://study.com/academy/lesson/calculating-probability-relative-frequencies.html
+
+
+Genome.txt
+Mean of all nucleotide string lengths 10.8333
+Variance Result = 20.8056
+
+Genome_Two.txt
+Mean of all nucleotide string lengths 10.5
+Variance Result = 24.25
