@@ -6,10 +6,22 @@
 //  Copyright © 2019 Donner Hanson. All rights reserved.
 //
 
-#include "ProbabilityCalc.hpp"
+
+#include <iomanip>
 #include <iostream>
 #include <string>
+
+#include "NucleoProb.hpp"
+#include "ProbabilityCalc.hpp"
+
 using namespace std;
+
+bool isEvenStrLen(const string& str)
+{
+    if ((str.length()%2) == 0)
+        return true;
+    return false;
+}
 
 const int PAIR_LEN = 2;
 
@@ -47,142 +59,182 @@ void ProbabilityCalc::ReadSingleOccurrences(string const &str)
 // copy string and test first 2 for string comp
 // pop 2 front letters off
 // repeat
-// ASSUMING EVEN PAIRS
+// ASSUMING EVEN PAIRS - will run but will recieve erroneous results
 void ProbabilityCalc::ReadPairedOccurrences(string const &str)
 {
     //str.substr (3,5)
     //tempStr = str.substr(index, length)
-    string tempStr;
-    char first;
-    char second;
-    for (int i(0); i < str.length(); i+=PAIR_LEN)
+    if(strUt.isEvenStrLen(str))
     {
-        tempStr = str.substr(i,PAIR_LEN);
-        first = tempStr.at(0);
-        second = tempStr.at(1);
-        switch (first)
+        string tempStr;
+        char first;
+        char second;
+        for (int i(0); i < str.length(); i+=PAIR_LEN)
         {
-            case 'A':
-                switch (second)
+            tempStr = str.substr(i,PAIR_LEN);
+            first = tempStr.at(0);
+            second = tempStr.at(1);
+            // using switch for mild optimization
+            switch (first)
             {
                 case 'A':
-                    ++numAA;
-                    ++totalPairs;
+                    switch (second)
+                {
+                    case 'A':
+                        ++numAA;
+                        ++totalPairs;
+                        break;
+                    case 'C':
+                        ++numAC;
+                        ++totalPairs;
+                        break;
+                    case 'T':
+                        ++numAT;
+                        ++totalPairs;
+                        break;
+                    case 'G':
+                        ++numAG;
+                        ++totalPairs;
+                        break;
+                    default:
+                        break;
+                }
                     break;
                 case 'C':
-                    ++numAC;
-                    ++totalPairs;
-                    break;
+                    switch (second)
+                {
+                    case 'A':
+                        ++numCA;
+                        ++totalPairs;
+                        break;
+                    case 'C':
+                        ++numCC;
+                        ++totalPairs;
+                        break;
+                    case 'T':
+                        ++numCT;
+                        ++totalPairs;
+                        break;
+                    case 'G':
+                        ++numCG;
+                        ++totalPairs;
+                        break;
+                }
                 case 'T':
-                    ++numAT;
-                    ++totalPairs;
-                    break;
+                    switch (second)
+                {
+                    case 'A':
+                        ++numTA;
+                        ++totalPairs;
+                        break;
+                    case 'C':
+                        ++numTC;
+                        ++totalPairs;
+                        break;
+                    case 'T':
+                        ++numTT;
+                        ++totalPairs;
+                        break;
+                    case 'G':
+                        ++numTG;
+                        ++totalPairs;
+                        break;
+                    default:
+                        break;
+                }
                 case 'G':
-                    ++numAG;
-                    ++totalPairs;
-                    break;
+                    switch (second)
+                {
+                    case 'A':
+                        ++numGA;
+                        ++totalPairs;
+                        break;
+                    case 'C':
+                        ++numGC;
+                        ++totalPairs;
+                        break;
+                    case 'T':
+                        ++numGT;
+                        ++totalPairs;
+                        break;
+                    case 'G':
+                        ++numGG;
+                        ++totalPairs;
+                        break;
+                    default:
+                        break;
+                }
+                    
                 default:
                     break;
-            }
-                break;
-            case 'C':
-                switch (second)
-            {
-                case 'A':
-                    ++numCA;
-                    ++totalPairs;
-                    break;
-                case 'C':
-                    ++numCC;
-                    ++totalPairs;
-                    break;
-                case 'T':
-                    ++numCT;
-                    ++totalPairs;
-                    break;
-                case 'G':
-                    ++numCG;
-                    ++totalPairs;
-                    break;
-            }
-            case 'T':
-                switch (second)
-            {
-                case 'A':
-                    ++numTA;
-                    ++totalPairs;
-                    break;
-                case 'C':
-                    ++numTC;
-                    ++totalPairs;
-                    break;
-                case 'T':
-                    ++numTT;
-                    ++totalPairs;
-                    break;
-                case 'G':
-                    ++numTG;
-                    ++totalPairs;
-                    break;
-                default:
-                    break;
-            }
-            case 'G':
-                switch (second)
-            {
-                case 'A':
-                    ++numGA;
-                    ++totalPairs;
-                    break;
-                case 'C':
-                    ++numGC;
-                    ++totalPairs;
-                    break;
-                case 'T':
-                    ++numGT;
-                    ++totalPairs;
-                    break;
-                case 'G':
-                    ++numGG;
-                    ++totalPairs;
-                    break;
-                default:
-                    break;
-            }
-                
-            default:
-                break;
-        };
+            };
+        }
+        
     }
-    
-    // using switch for mild speed boost
 }
 
+void ProbabilityCalc::sortProbabilities()
+{
+    // if a prob is highest highest char = A etc
+     aProb.setValues(getNumA()/getTotalNucleos(), 'A');
+     cProb.setValues(getNumC()/getTotalNucleos(), 'C');
+     tProb.setValues(getNumT()/getTotalNucleos(), 'T');
+     gProb.setValues(getNumG()/getTotalNucleos(), 'G');
+    // CONSTRUCT CLASSES THAT HAVE A CHAR AND ARE ABLE TO
+    // HAVE COMPARISONS
+    //
+    cout << aProb.getProb() << " " << cProb.getProb() << " "  << tProb.getProb() << " "  << gProb.getProb() << "\n";
+    for (int i(0); i < 4; ++i){
+    if (aProb < cProb)
+        swap(aProb, cProb);
+    
+    if (tProb < gProb)
+        swap(tProb, gProb);
+    
+    if (aProb < tProb)
+        swap(aProb, tProb);
+    
+    if (cProb < gProb)
+        swap(cProb, gProb);
+    
+    if (cProb < tProb)
+        swap(cProb, tProb);}
+    
+    highest = aProb.getNucleo(); second = cProb.getNucleo(); third = tProb.getNucleo(); lowest = gProb.getNucleo();
+    
+    cout << aProb.getNucleo() << " " << cProb.getNucleo() << " "  << tProb.getNucleo() << " "  << gProb.getNucleo() << "\n";
+    cout << highest << " " << second << " " << third << " " << lowest << "\n";
+    
+    
+    highNum = aProb.getProb(); secondNum = cProb.getProb(); thirdNum = tProb.getProb(); lowNum = gProb.getProb();
+    cout << highNum << " " << secondNum << " " << thirdNum << " " << lowNum << "\n";
+    cout << aProb.getProb() << " " << cProb.getProb() << " "  << tProb.getProb() << " "  << gProb.getProb() << "\n";
+}
 
 ostream& operator << (ostream& out, const ProbabilityCalc &pc)
 {
     stringstream ss;
-    ss << "Nucleotide  Probability\n"
-    <<"A: " << pc.numA    << "    " << pc.numA/pc.totalNucleos
-    << "\nC: " << pc.numC << "    " << pc.numC/pc.totalNucleos
-    << "\nT: " << pc.numT << "    " << pc.numT/pc.totalNucleos
-    << "\nG: " << pc.numG << "    " << pc.numG/pc.totalNucleos
-    <<"\nAA: " << pc.numAA <<"    " << pc.numAA/pc.totalPairs
-    <<"\nAC: " << pc.numAC <<"    " << pc.numAC/pc.totalPairs
-    <<"\nAT: " << pc.numAT <<"    " << pc.numAT/pc.totalPairs
-    <<"\nAG: " << pc.numAG <<"    " << pc.numAG/pc.totalPairs
-    <<"\nCA: " << pc.numCA <<"    " << pc.numCA/pc.totalPairs
-    <<"\nCC: " << pc.numCC <<"    " << pc.numCC/pc.totalPairs
-    <<"\nCT: " << pc.numCT <<"    " << pc.numCT/pc.totalPairs
-    <<"\nCG: " << pc.numCG <<"    " << pc.numCG/pc.totalPairs
-    <<"\nTA: " << pc.numTA <<"    " << pc.numTA/pc.totalPairs
-    <<"\nTC: " << pc.numTC <<"    " << pc.numTC/pc.totalPairs
-    <<"\nTT: " << pc.numTT <<"    " << pc.numTT/pc.totalPairs
-    <<"\nTG: " << pc.numTG <<"    " << pc.numTG/pc.totalPairs
-    <<"\nGA: " << pc.numGA <<"    " << pc.numGA/pc.totalPairs
-    <<"\nGC: " << pc.numGC <<"    " << pc.numGC/pc.totalPairs
-    <<"\nGT: " << pc.numGT <<"    " << pc.numGT/pc.totalPairs
-    <<"\nGG: " << pc.numGG <<"    " << pc.numGG/pc.totalPairs << "\n";
+    ss << "Nucleotide    Probability\n"
+    << "A:  " << left << setw(6) << pc.numA << "    " << pc.numA/pc.totalNucleos
+    << "\nC:  " << setw(6) << pc.numC << "    " << pc.numC/pc.totalNucleos
+    << "\nT:  " << setw(6)  << pc.numT << "    " << pc.numT/pc.totalNucleos
+    << "\nG:  " << setw(6)  << pc.numG << "    " << pc.numG/pc.totalNucleos
+    << "\nAA: " << setw(6)  << pc.numAA <<"    " << pc.numAA/pc.totalPairs
+    << "\nAC: " << setw(6)  << pc.numAC <<"    " << pc.numAC/pc.totalPairs
+    << "\nAT: " << setw(6)  << pc.numAT <<"    " << pc.numAT/pc.totalPairs
+    << "\nAG: " << setw(6)  << pc.numAG <<"    " << pc.numAG/pc.totalPairs
+    << "\nCA: " << setw(6)  << pc.numCA <<"    " << pc.numCA/pc.totalPairs
+    << "\nCC: " << setw(6)  << pc.numCC <<"    " << pc.numCC/pc.totalPairs
+    << "\nCT: " << setw(6)  << pc.numCT <<"    " << pc.numCT/pc.totalPairs
+    << "\nCG: " << setw(6)  << pc.numCG <<"    " << pc.numCG/pc.totalPairs
+    << "\nTA: " << setw(6)  << pc.numTA <<"    " << pc.numTA/pc.totalPairs
+    << "\nTC: " << setw(6)  << pc.numTC <<"    " << pc.numTC/pc.totalPairs
+    << "\nTT: " << setw(6)  << pc.numTT <<"    " << pc.numTT/pc.totalPairs
+    << "\nTG: " << setw(6)  << pc.numTG <<"    " << pc.numTG/pc.totalPairs
+    << "\nGA: " << setw(6)  << pc.numGA <<"    " << pc.numGA/pc.totalPairs
+    << "\nGC: " << setw(6)  << pc.numGC <<"    " << pc.numGC/pc.totalPairs
+    << "\nGT: " << setw(6)  << pc.numGT <<"    " << pc.numGT/pc.totalPairs
+    << "\nGG: " << setw(6)  << pc.numGG <<"    " << pc.numGG/pc.totalPairs << "\n";
     string ssString = ss.str();
     out << ssString;
     

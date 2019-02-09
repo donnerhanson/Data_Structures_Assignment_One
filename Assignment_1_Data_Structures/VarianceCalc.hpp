@@ -24,7 +24,7 @@ class VarianceCalc
 {
     friend ostream& operator << (ostream& out, const VarianceCalc &vc);
 public:
-    VarianceCalc() : numLines(0), sumLineLengths(0), mean(0), variance(0), varianceNumeratorTotal(0), standardDeviation(0) {};
+    VarianceCalc() : numLines(0), sumLineLengths(0), mean(0), variance(0), varianceNumeratorTotal(0), varianceLineLength(0), varianceResult(0),standardDeviation(0) {};
     double getNumLines();
     double getSumLineLengths();
     double getMean();
@@ -32,10 +32,11 @@ public:
     
     void setMean();
     
+    void addLine(const string &str);
     void CalculateVarianceNumerator(const string &str);
     void CalculateVarianceResult();
     void CalculateStandardDeviation();
-    void addLine(const string &str);
+    
     
 private:
     double numLines;
@@ -46,8 +47,6 @@ private:
     double varianceLineLength;
     double varianceResult;
     double standardDeviation;
-    // standard deviation is the square root of the variance
-    // TODO: gotta do std deviation method
 };
 
 ostream& operator << (ostream& out, const VarianceCalc &vc);

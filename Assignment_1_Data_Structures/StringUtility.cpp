@@ -9,6 +9,7 @@
 #include "StringUtility.hpp"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 
 string StringUtility::Capitalize(string &str)
@@ -56,6 +57,13 @@ bool StringUtility::CheckForYesNo()
     }
 }
 
+bool StringUtility::isEvenStrLen(const string& str)
+{
+    if ((str.length()%2) == 0)
+        return true;
+    return false;
+}
+
 //Pass string by reference (no copy constructed) and removes unwanted chars
 string StringUtility::RemoveErroneousChars(string& str)
 {
@@ -71,5 +79,14 @@ string StringUtility::RemoveErroneousChars(string& str)
     // the referenced str now is updated program wide
     str = temp;
     return str;
+}
+
+ostream& operator << (ostream& out, const StringUtility &su)
+{
+    stringstream ss;
+    ss << "Lines ommited from process: " << su.linesOmitted << "\n";
+    string ssString = ss.str();
+    out << ssString;
+    return out;
 }
 

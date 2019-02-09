@@ -23,6 +23,22 @@ https://study.com/academy/lesson/calculating-probability-relative-frequencies.ht
 substring
 http://www.cplusplus.com/reference/string/string/substr/
 
+http://www.cplusplus.com/faq/beginners/random-numbers/
+suggested casting rand_max to double as well as rand()
+https://stackoverflow.com/questions/19741810/get-random-double-number-from-0-1-in-c
+
+Box Mueller transform
+https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+
+https://en.wikipedia.org/wiki/Normal_distribution#Generating_values_from_normal_distribution
+
+natural log
+https://www.geeksforgeeks.org/log-function-cpp/
+
+selecting a random variable given multiple inputs
+https://stackoverflow.com/questions/8642135/c-how-randomly-with-given-probabilities-choose-numbers
+
+
 Genome.txt
 Mean of all nucleotide string lengths 10.8333
 Variance Result = 20.8056

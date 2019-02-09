@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+
+#include "NucleoProb.hpp"
+#include "StringUtility.hpp"
+
 using namespace std;
 class ProbabilityCalc
 {
@@ -20,16 +24,26 @@ public:
     ProbabilityCalc() : numA(0), numC(0), numT(0),
     numG(0),numAA(0),numAC(0),numAT(0),numAG(0),numCA(0),
     numCC(0),numCT(0),numCG(0),numTA(0),numTC(0),numTT(0),
-    numTG(0),numGA(0),numGC(0),numGT(0),numGG(0), totalNucleos(0), totalPairs(0) {};
+    numTG(0),numGA(0),numGC(0),numGT(0),numGG(0), totalNucleos(0), totalPairs(0), aProb(0,0), cProb(0,0), tProb(0,0), gProb(0,0) {};
     
     void ReadSingleOccurrences(string const &str);
     void ReadPairedOccurrences(string const &str);
     
     
-    double getNumA(){return numA;}
-    double getNumC(){return numC;}
-    double getNumT(){return numT;}
-    double getNumG(){return numG;}
+    double getNumA()const{return numA;}
+    double getNumC()const{return numC;}
+    double getNumT()const{return numT;}
+    double getNumG()const{return numG;}
+    double getTotalNucleos()const{return totalNucleos;}
+    void sortProbabilities();
+    char getHighest(){return highest;}
+    char getSecond(){return second;}
+    char getThird(){return third;}
+    char getLowest(){return lowest;}
+    double getHighNum(){return highNum;}
+    double getSecondNum(){return secondNum;}
+    double getThirdNum(){return thirdNum;}
+    double getLowNum(){return lowNum;}
     
 private:
     double numA, numC, numT, numG, numAA,
@@ -38,6 +52,10 @@ private:
     numGA, numGC, numGT, numGG;
     double totalNucleos, totalPairs;
     double singleProb, pairProb;
+    nucleoProb aProb, cProb, tProb, gProb;
+    char highest, second, third, lowest;
+    double highNum, secondNum, thirdNum, lowNum;
+    StringUtility strUt;
 };
 
 ostream& operator << (ostream& out, const ProbabilityCalc &pc);
