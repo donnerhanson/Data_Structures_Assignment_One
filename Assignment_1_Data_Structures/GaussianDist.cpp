@@ -42,15 +42,9 @@ double GaussianDist::generateRandomDouble()
 void GaussianDist::createRandomizedString(ProbabilityCalc &pc)
 {
     double randNum;
-    
-//    double aVal = pc.getNumA()/pc.getTotalNucleos();
-//    double cVal = pc.getNumC()/pc.getTotalNucleos();
-//    double tVal = pc.getNumT()/pc.getTotalNucleos();
-//    double gVal = pc.getNumG()/pc.getTotalNucleos();
-//
     // in probability calc and nucleoProb
     string highChar(1,pc.getHighest()), secondChar(1,pc.getSecond()), thirdChar(1,pc.getThird()), lowChar(1,pc.getLowest());
-    double highNum(pc.getHighNum()), secondNum(pc.getSecondNum()), thirdNum(pc.getThirdNum()), lowNum(pc.getLowNum());
+    double secondNum(pc.getSecondNum()), thirdNum(pc.getThirdNum()), lowNum(pc.getLowNum());
     
     
 

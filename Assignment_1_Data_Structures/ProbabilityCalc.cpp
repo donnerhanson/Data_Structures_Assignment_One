@@ -164,12 +164,10 @@ void ProbabilityCalc::ReadPairedOccurrences(string const &str)
                     default:
                         break;
                 }
-                    
                 default:
                     break;
             };
         }
-        
     }
 }
 
@@ -180,35 +178,20 @@ void ProbabilityCalc::sortProbabilities()
      cProb.setValues(getNumC()/getTotalNucleos(), 'C');
      tProb.setValues(getNumT()/getTotalNucleos(), 'T');
      gProb.setValues(getNumG()/getTotalNucleos(), 'G');
-    // CONSTRUCT CLASSES THAT HAVE A CHAR AND ARE ABLE TO
-    // HAVE COMPARISONS
-    //
-    cout << aProb.getProb() << " " << cProb.getProb() << " "  << tProb.getProb() << " "  << gProb.getProb() << "\n";
     for (int i(0); i < 4; ++i){
     if (aProb < cProb)
         swap(aProb, cProb);
-    
     if (tProb < gProb)
         swap(tProb, gProb);
-    
     if (aProb < tProb)
         swap(aProb, tProb);
-    
     if (cProb < gProb)
         swap(cProb, gProb);
-    
     if (cProb < tProb)
         swap(cProb, tProb);}
-    
+    // sorted letters and numbers stored to nucleoProb private members
     highest = aProb.getNucleo(); second = cProb.getNucleo(); third = tProb.getNucleo(); lowest = gProb.getNucleo();
-    
-    cout << aProb.getNucleo() << " " << cProb.getNucleo() << " "  << tProb.getNucleo() << " "  << gProb.getNucleo() << "\n";
-    cout << highest << " " << second << " " << third << " " << lowest << "\n";
-    
-    
     highNum = aProb.getProb(); secondNum = cProb.getProb(); thirdNum = tProb.getProb(); lowNum = gProb.getProb();
-    cout << highNum << " " << secondNum << " " << thirdNum << " " << lowNum << "\n";
-    cout << aProb.getProb() << " " << cProb.getProb() << " "  << tProb.getProb() << " "  << gProb.getProb() << "\n";
 }
 
 ostream& operator << (ostream& out, const ProbabilityCalc &pc)

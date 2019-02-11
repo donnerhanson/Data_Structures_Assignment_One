@@ -23,11 +23,7 @@ public:
     // The relative frequency of nucleotides will also follow the statistics calculated above. -- Assuming only frequency of single nucleotides
     friend ostream& operator << (ostream& out, const GaussianDist &gd);
 
-    GaussianDist(VarianceCalc& varCalc) : gaussMean(varCalc.getMean()), gaussVariance(varCalc.getVarianceResult()), randOne(0), randTwo(0), standardGauss(0)
-    {
-        cout << "GAUSS MEAN: " << gaussMean << "\n";
-        cout << "GAUSS VAR : " << gaussVariance << "\n";
-    };
+    GaussianDist(VarianceCalc& varCalc) : gaussMean(varCalc.getMean()), gaussVariance(varCalc.getVarianceResult()), randOne(0), randTwo(0), standardGauss(0){};
     void setRandOne(double num)
     {
         randOne = num;
