@@ -7,17 +7,13 @@
 // Project Name: Assignment 1 DNA
 // File Name   : main.cpp
 // Assignment  : Assignment 1
-// Version     : 1.2
+// Version     : 1.3
 // Instructor  : Rene German
 // Description : main
 //================================================================
 
-#include <algorithm>
-#include <exception>
 #include <fstream>
 #include <iostream>
-#include <cmath>
-#include <ostream>
 #include <string>
 #include <time.h>
 
@@ -25,6 +21,7 @@
 #include "ProbabilityCalc.hpp"
 #include "StringUtility.hpp"
 #include "StudentInfo.hpp"
+#include "UserInterface.hpp"
 #include "VarianceCalc.hpp"
 
 
@@ -35,44 +32,39 @@ using namespace std;
 
 const string ASK_NEW_FILE = "Enter next file path....\n";
 const string NUM_CMD_ARGS_FAIL = "Not enough command line arguements...\n";
+const string STUDENT_OUT_FILE = "donnerhanson.out";
 
 const int TOTAL_LINES_TO_PRINT = 1000;
 
-bool IsBlank(ifstream& inFile)
-{
-    return inFile.peek() == ifstream::traits_type::eof();
-}
+// Main funciton protoypes
 
-// stack overflow - find first not white space
-// if after iterating through string and not found
-// true else false
-bool NotWS(const string &str)
-{
-    return str.find_first_not_of(' ') != std::string::npos;
-}
+bool fileIsBlank(ifstream& inFile);
 
-double generateRandomDouble()
-{
-    double randNum = ((double)rand() / (double)RAND_MAX);
-    return randNum;
-}
+bool isNotWS(const string &str);
+
+bool isGoodFile(const string &str);
+
+double generateRandomDouble();
+
+// // // // // // // // // // // // // // //
+//                  MAIN                  //
+// // // // // // // // // // // // // // //
 
 int main(int argc, const char * argv[])
 {
     // if user wants to continue: prompted at end
     bool persist = true;
-    bool isSecondFile = false ;
-    string modeOne = "ios::out";
-    string modeTwo = "ios::app";
+    bool isSecondFile = false;
+    
+    
     // general string manipulations: spaces, count, skip....
     StringUtility strManip;
+    // ask user for continue or not
+    UserInterface interface;
     
     string filename = argv[1];
     // seed random number
     srand(static_cast<unsigned int>(time(NULL)));
-    cout << argc << "\n";
-    cout << argv[1] << "\n";
-    cout << isSecondFile << "\n";
     while(persist)
     {
         
@@ -80,14 +72,16 @@ int main(int argc, const char * argv[])
         {
             
             // open output file to put results
-            ofstream output("DonnerHanson.txt", ios::out);
+            // will create or destroy any existing file
+            // and replace
+            ofstream output(STUDENT_OUT_FILE, ios::out);
             if (!output.is_open())
             {
                 cout << "Failed to open output file\n";
             }
             ifstream inFile(filename, ios::in);
             string line;
-            if(inFile.is_open() && !IsBlank(inFile))
+            if(inFile.is_open() && !fileIsBlank(inFile))
             {
                 StudentInfo* student = new StudentInfo();
                 VarianceCalc* varianceCalc = new VarianceCalc();
@@ -99,7 +93,7 @@ int main(int argc, const char * argv[])
                     strManip.RemoveErroneousChars(line);
                     // if the line is not whitespace and
                     // is even lenght add to results
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         varianceCalc->addLine(line);
                     }
@@ -118,7 +112,7 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         varianceCalc->CalculateVarianceNumerator(line);
                     }
@@ -135,7 +129,7 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         pc->ReadSingleOccurrences(line);
                     }
@@ -148,27 +142,22 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         pc->ReadPairedOccurrences(line);
                     }
                 }
-                //TESTS TO COUT
-//                cout << *student;
-//                cout << *varianceCalc;
-//                cout << *pc;
-//                cout << strManip;
-                // print results to file
                 output << *student;
+                output << "DNA from file: " << filename << "\n";
                 output << strManip;
                 output << *varianceCalc;
                 output << *pc;
-                output << filename << "\n";
+                output << "\n";
                 // close open files
                 output.close();
                 inFile.close();
                 // open file for append and do other calcs
-                ofstream output("DonnerHanson.txt", ios::app);
+                ofstream output(STUDENT_OUT_FILE, ios::app);
                 if (!output.is_open())
                 {
                     cout << "Failed to open output file\n";
@@ -195,7 +184,7 @@ int main(int argc, const char * argv[])
                 // close appending file
                 output.close();
             }
-            else if (IsBlank(inFile))
+            else if (fileIsBlank(inFile))
             {
                 cout << "File entered is blank!\n";
             }
@@ -207,16 +196,15 @@ int main(int argc, const char * argv[])
         else if (isSecondFile == true)
         {
             // open output file to put results
-            ofstream output("DonnerHanson.txt", ios::app);
+            ofstream output(STUDENT_OUT_FILE, ios::app);
             if (!output.is_open())
             {
                 cout << "Failed to open output file\n";
             }
             ifstream inFile(filename, ios::in);
             string line;
-            if(inFile.is_open() && !IsBlank(inFile))
+            if(inFile.is_open() && !fileIsBlank(inFile))
             {
-                StudentInfo* student = new StudentInfo();
                 VarianceCalc* varianceCalc = new VarianceCalc();
                 // PT 1: get sum of lengths, num of lines, and mean
                 while (getline(inFile, line))
@@ -226,7 +214,7 @@ int main(int argc, const char * argv[])
                     strManip.RemoveErroneousChars(line);
                     // if the line is not whitespace and
                     // is even lenght add to results
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         varianceCalc->addLine(line);
                     }
@@ -245,7 +233,7 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         varianceCalc->CalculateVarianceNumerator(line);
                     }
@@ -262,7 +250,7 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         pc->ReadSingleOccurrences(line);
                     }
@@ -275,27 +263,22 @@ int main(int argc, const char * argv[])
                 {
                     strManip.Capitalize(line);
                     strManip.RemoveErroneousChars(line);
-                    if(NotWS(line) && strManip.isEvenStrLen(line))
+                    if(isNotWS(line) && strManip.isEvenStrLen(line))
                     {
                         pc->ReadPairedOccurrences(line);
                     }
                 }
-                //TESTS TO COUT
-                //                cout << *student;
-                //                cout << *varianceCalc;
-                //                cout << *pc;
-                //                cout << strManip;
                 // print results to file
-                output << *student;
+                output << "\nDNA from file: " << filename << "\n";
                 output << strManip;
                 output << *varianceCalc;
                 output << *pc;
-                output << filename << "\n";
+                output << "\n";
                 // close open files
                 output.close();
                 inFile.close();
                 // open file for append and do other calcs
-                ofstream output("DonnerHanson.txt", ios::app);
+                ofstream output(STUDENT_OUT_FILE, ios::app);
                 if (!output.is_open())
                 {
                     cout << "Failed to open output file\n";
@@ -315,14 +298,13 @@ int main(int argc, const char * argv[])
                     gd->eraseString();
                 }
                 // delete dynamically allocated resources
-                delete student;
                 delete pc;
                 delete varianceCalc;
                 delete gd;
                 // close appending file
                 output.close();
             }
-            else if (IsBlank(inFile))
+            else if (fileIsBlank(inFile) && isNotWS(filename))
             {
                 cout << "File entered is blank!\n";
             }
@@ -336,18 +318,56 @@ int main(int argc, const char * argv[])
             cout << NUM_CMD_ARGS_FAIL;
         }
         cout << ASK_CONTINUE;
-        persist = strManip.CheckForYesNo();
+        persist = interface.CheckForYesNo();
         // Ask for a new filename
         string newFilename;
         if (persist)
         {
-            cout << "Continuing....\n\n";
+            cout << "Continuing....\n";
             cout << ASK_NEW_FILE;
             getline(cin, newFilename);
             isSecondFile = true;
         }
         filename = newFilename;
+        // if the filename is greater than zero
+        // if user dragged file sometimes there is
+        // ending whitespace in string
+        if (filename.size() > 0 && isNotWS(filename))
+        {
+            while(filename.at(filename.size()-1) == '\n' ||
+                  filename.at(filename.size()-1) == ' ')
+            {
+                // remove ending whitespace
+                filename.pop_back();
+            }
+        }
+        else if(!isNotWS(filename) && persist == true)
+        {
+            cout << "No file entered....";
+        }
     }
     cout << "Program terminated....\n\n";
     return 0;
+}
+
+
+// Main Function Declarations
+bool fileIsBlank(ifstream& inFile)
+{
+    return inFile.peek() == ifstream::traits_type::eof();
+}
+
+
+// stack overflow - find first not white space
+// if after iterating through string and not found
+// true else false
+bool isNotWS(const string &str)
+{
+    return str.find_first_not_of(' ') != std::string::npos;
+}
+
+double generateRandomDouble()
+{
+    double randNum = ((double)rand() / (double)RAND_MAX);
+    return randNum;
 }

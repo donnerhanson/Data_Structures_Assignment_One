@@ -1,9 +1,9 @@
 Data Structures and Algorithms
 
 References:
-CPP Reference
-CPlusPlus.com
-Geeks for Geeks
+CPP Reference - general library information
+CPlusPlus.com - general library informa
+Geeks for Geeks - bubble sort
 Stack Overflow
 
 C/C++ Lecture Notes I - Raymond Mitchell - UCSD Extension
@@ -24,6 +24,7 @@ substring
 http://www.cplusplus.com/reference/string/string/substr/
 
 http://www.cplusplus.com/faq/beginners/random-numbers/
+
 suggested casting rand_max to double as well as rand()
 https://stackoverflow.com/questions/19741810/get-random-double-number-from-0-1-in-c
 
@@ -38,11 +39,5 @@ https://www.geeksforgeeks.org/log-function-cpp/
 selecting a random variable given multiple inputs
 https://stackoverflow.com/questions/8642135/c-how-randomly-with-given-probabilities-choose-numbers
 
-
-Genome.txt
-Mean of all nucleotide string lengths 10.8333
-Variance Result = 20.8056
-
-Genome_Two.txt
-Mean of all nucleotide string lengths 10.5
-Variance Result = 24.25
+Makefile creation
+https://www.youtube.com/watch?v=_r7i5X0rXJk

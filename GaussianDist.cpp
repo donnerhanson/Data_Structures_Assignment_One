@@ -7,17 +7,20 @@
 // Project Name: Assignment 1 DNA
 // File Name   : GaussianDist.cpp
 // Assignment  : Assignment 1
-// Version     : 1.2
+// Version     : 1.3
 // Instructor  : Rene German
 // Description : Functions For Calculating Gaussian Distribution
 //               of nucleotides calculated by ProbabilityCalc and
 //               VarianceCalc
 //================================================================
 
+#include <cmath>
+#include <iosfwd>
+#include <string>
+
 #include "GaussianDist.hpp"
 #include "ProbabilityCalc.hpp"
-#include <cmath>
-#include <string>
+
 
 using namespace std;
 
@@ -47,18 +50,18 @@ void GaussianDist::createRandomizedString(ProbabilityCalc &pc)
     double secondNum(pc.getSecondNum()), thirdNum(pc.getThirdNum()), lowNum(pc.getLowNum());
     
     
-
+    
     for (int i(0); i < newStrLen; ++i)
     {
         randNum = generateRandomDouble();
         if (randNum < lowNum)
             outPut.append(lowChar);
         if (randNum < lowNum + thirdNum)
-        outPut.append(thirdChar);
+            outPut.append(thirdChar);
         if (randNum < lowNum + thirdNum + secondNum)
-        outPut.append(secondChar);
+            outPut.append(secondChar);
         else
-        outPut.append(highChar);
+            outPut.append(highChar);
     }
 }
 

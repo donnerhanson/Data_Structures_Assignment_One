@@ -1,15 +1,22 @@
-//
-//  Calculator.cpp
-//  Assignment_1_Data_Structures
-//
-//  Created by Donner Hanson on 2/7/19.
-//  Copyright © 2019 Donner Hanson. All rights reserved.
-//
+//================================================================
+// Author      : Donner Hanson
+// Date        : 02/15/2019
+// Email       : hanso127@mail.chapman.edu
+// Course      : Data Structures and Algorithms
+// Course #    : CPSC-350-2
+// Project Name: Assignment 1 DNA
+// File Name   : VarianceCalc.cpp
+// Assignment  : Assignment 1
+// Version     : 1.3
+// Instructor  : Rene German
+// Description : Functions that allow for calculation
+//               of amount of lines, variance in line lengths, the
+//               mean of lengths and the standard deviation
+//================================================================
 
 #include "VarianceCalc.hpp"
 
 #include <cmath>
-#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -58,7 +65,7 @@ void VarianceCalc::CalculateVarianceNumerator(const string &str)
 
 void VarianceCalc::CalculateVarianceResult()
 {
-        varianceResult = varianceNumeratorTotal/numLines;
+    varianceResult = varianceNumeratorTotal/numLines;
 }
 
 void VarianceCalc::CalculateStandardDeviation()
@@ -68,7 +75,7 @@ void VarianceCalc::CalculateStandardDeviation()
 
 ostream& operator << (ostream& out, const VarianceCalc &vc)
 {
-   stringstream ss;
+    stringstream ss;
     ss << "Sum of lengths: " << vc.sumLineLengths << "\nMean of lengths: " << vc.mean << "\nVariance of lengths: " << vc.varianceResult << "\nStandard of deviation: " << vc.standardDeviation << "\n";
     string ssString = ss.str();
     out << ssString;

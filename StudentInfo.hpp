@@ -5,9 +5,9 @@
 // Course      : Data Structures and Algorithms
 // Course #    : CPSC-350-2
 // Project Name: Assignment 1 DNA
-// File Name   : StudentInfo.h
+// File Name   : StudentInfo.hpp
 // Assignment  : Assignment 1
-// Version     : 1.2
+// Version     : 1.3
 // Instructor  : Rene German
 // Description : Student Information for assignment output
 //================================================================
@@ -15,8 +15,9 @@
 #ifndef StudentInfo_hpp
 #define StudentInfo_hpp
 
-#include <iostream>
-#include <stdio.h>
+#include <iosfwd>
+#include <string>
+
 using namespace std;
 
 class StudentInfo

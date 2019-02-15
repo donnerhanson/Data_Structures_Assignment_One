@@ -1,14 +1,21 @@
-//
-//  ProbabilityCalc.cpp
-//  Assignment_1_Data_Structures
-//
-//  Created by Donner Hanson on 2/7/19.
-//  Copyright © 2019 Donner Hanson. All rights reserved.
-//
+//================================================================
+// Author      : Donner Hanson
+// Date        : 02/15/2019
+// Email       : hanso127@mail.chapman.edu
+// Course      : Data Structures and Algorithms
+// Course #    : CPSC-350-2
+// Project Name: Assignment 1 DNA
+// File Name   : ProbabilityCalc.cpp
+// Assignment  : Assignment 1
+// Version     : 1.3
+// Instructor  : Rene German
+// Description : Functions For Calculating Probability
+//               of nucleotides
+//================================================================
 
 
 #include <iomanip>
-#include <iostream>
+#include <iosfwd>
 #include <string>
 
 #include "NucleoProb.hpp"
@@ -174,21 +181,21 @@ void ProbabilityCalc::ReadPairedOccurrences(string const &str)
 void ProbabilityCalc::sortProbabilities()
 {
     // if a prob is highest highest char = A etc
-     aProb.setValues(getNumA()/getTotalNucleos(), 'A');
-     cProb.setValues(getNumC()/getTotalNucleos(), 'C');
-     tProb.setValues(getNumT()/getTotalNucleos(), 'T');
-     gProb.setValues(getNumG()/getTotalNucleos(), 'G');
+    aProb.setValues(getNumA()/getTotalNucleos(), 'A');
+    cProb.setValues(getNumC()/getTotalNucleos(), 'C');
+    tProb.setValues(getNumT()/getTotalNucleos(), 'T');
+    gProb.setValues(getNumG()/getTotalNucleos(), 'G');
     for (int i(0); i < 4; ++i){
-    if (aProb < cProb)
-        swap(aProb, cProb);
-    if (tProb < gProb)
-        swap(tProb, gProb);
-    if (aProb < tProb)
-        swap(aProb, tProb);
-    if (cProb < gProb)
-        swap(cProb, gProb);
-    if (cProb < tProb)
-        swap(cProb, tProb);}
+        if (aProb < cProb)
+            swap(aProb, cProb);
+        if (tProb < gProb)
+            swap(tProb, gProb);
+        if (aProb < tProb)
+            swap(aProb, tProb);
+        if (cProb < gProb)
+            swap(cProb, gProb);
+        if (cProb < tProb)
+            swap(cProb, tProb);}
     // sorted letters and numbers stored to nucleoProb private members
     highest = aProb.getNucleo(); second = cProb.getNucleo(); third = tProb.getNucleo(); lowest = gProb.getNucleo();
     highNum = aProb.getProb(); secondNum = cProb.getProb(); thirdNum = tProb.getProb(); lowNum = gProb.getProb();

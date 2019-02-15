@@ -1,21 +1,23 @@
-//
-//  Calculator.hpp
-//  Assignment_1_Data_Structures
-//
-//  Created by Donner Hanson on 2/7/19.
-//  Copyright © 2019 Donner Hanson. All rights reserved.
-//
+//================================================================
+// Author      : Donner Hanson
+// Date        : 02/15/2019
+// Email       : hanso127@mail.chapman.edu
+// Course      : Data Structures and Algorithms
+// Course #    : CPSC-350-2
+// Project Name: Assignment 1 DNA
+// File Name   : VarianceCalc.hpp
+// Assignment  : Assignment 1
+// Version     : 1.3
+// Instructor  : Rene German
+// Description : Functions outlines for calculation
+//               of amount of lines, variance in line lengths, the
+//               mean of lengths and the standard deviation
+//================================================================
 
 #ifndef Calculator_hpp
 #define Calculator_hpp
 
-#include <stdio.h>
-#include <algorithm>
-#include <exception>
-#include <fstream>
-#include <iostream>
-#include <cmath>
-#include <ostream>
+#include <iosfwd>
 #include <string>
 
 #include "StringUtility.hpp"
